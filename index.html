@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOS — Browser Desktop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/window.css">
+  <link rel="stylesheet" href="css/taskbar.css">
+  <link rel="stylesheet" href="css/apps.css">
+</head>
+<body>
+
+  <!-- ═══ BOOT SCREEN ═══ -->
+  <div id="boot-screen">
+    <canvas id="boot-canvas"></canvas>
+    <div class="boot-content">
+      <div class="boot-logo">
+        <div class="boot-logo-rings">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+        </div>
+        <svg class="boot-logo-icon" width="52" height="52" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="9" height="9" rx="1.5" fill="url(#lg1)"/>
+          <rect x="13" y="2" width="9" height="9" rx="1.5" fill="url(#lg2)"/>
+          <rect x="2" y="13" width="9" height="9" rx="1.5" fill="url(#lg3)"/>
+          <rect x="13" y="13" width="9" height="9" rx="1.5" fill="url(#lg4)"/>
+          <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+            <linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#67e8f9"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+            <linearGradient id="lg3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+            <linearGradient id="lg4" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h1 class="boot-title">DevOS</h1>
+      <p class="boot-sub">Crafted by Claude &middot; v1.0.0</p>
+      <div class="boot-progress-track">
+        <div class="boot-progress-fill" id="boot-bar"></div>
+      </div>
+      <p class="boot-status" id="boot-status">Initializing kernel…</p>
+    </div>
+  </div>
+
+  <!-- ═══ DESKTOP ═══ -->
+  <div id="desktop" class="hidden">
+    <canvas id="bg-canvas"></canvas>
+    <div class="desktop-icons" id="desktop-icons"></div>
+  </div>
+
+  <!-- ═══ WINDOWS ═══ -->
+  <div id="windows-layer" class="hidden"></div>
+
+  <!-- ═══ CONTEXT MENU ═══ -->
+  <div id="ctx-menu" class="ctx-menu hidden"></div>
+
+  <!-- ═══ NOTIFICATIONS ═══ -->
+  <div id="notif-area"></div>
+
+  <!-- ═══ TASKBAR ═══ -->
+  <div id="taskbar" class="hidden">
+    <div class="tb-left">
+      <button class="start-btn" id="start-btn" title="Start Menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="2" y="2" width="9" height="9" rx="1.5"/>
+          <rect x="13" y="2" width="9" height="9" rx="1.5"/>
+          <rect x="2" y="13" width="9" height="9" rx="1.5"/>
+          <rect x="13" y="13" width="9" height="9" rx="1.5"/>
+        </svg>
+        <span>DevOS</span>
+      </button>
+    </div>
+    <div class="tb-center" id="tb-apps"></div>
+    <div class="tb-right">
+      <div class="sys-tray">
+        <div class="tray-clock">
+          <span id="tb-time">00:00</span>
+          <span id="tb-date">Apr 9</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ START MENU ═══ -->
+  <div id="start-menu" class="hidden">
+    <div class="sm-search-row">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="sm-search" type="text" placeholder="Search apps…" autocomplete="off">
+    </div>
+    <div class="sm-section-label">All Apps</div>
+    <div class="sm-apps" id="sm-apps"></div>
+    <div class="sm-footer">
+      <div class="sm-user">
+        <div class="sm-avatar">U</div>
+        <span>user@devos</span>
+      </div>
+      <button id="sm-power" class="sm-power" title="Power off">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts load order matters -->
+  <script src="js/filesystem.js"></script>
+  <script src="js/desktop-bg.js"></script>
+  <script src="js/window-manager.js"></script>
+  <script src="js/apps/terminal.js"></script>
+  <script src="js/apps/editor.js"></script>
+  <script src="js/apps/snake.js"></script>
+  <script src="js/apps/neural.js"></script>
+  <script src="js/apps/calculator.js"></script>
+  <script src="js/apps/explorer.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
